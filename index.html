@@ -95,8 +95,43 @@
             <label for="body"><span class="emoji-label">💬</span>Détaillez votre signalement :</label>
             <textarea id="body" name="body" placeholder="Décrivez précisément la situation, le lieu, l'heure, les personnes impliquées, etc." required></textarea>
             
+
+            <label for="img" style="display:block; text-align:left; margin-bottom:6px;"><span class="emoji-label">📸</span>Envoyer une photo :</label>
+            <div style="display:flex; align-items:center; justify-content:center;">
+                <label for="img" style="background:#8a2be2; color:#fff; border-radius:7px; padding:10px 22px; cursor:pointer; font-size:1.1em; font-family:'Montserrat', Arial, sans-serif; display:flex; align-items:center; gap:8px; transition:background 0.3s; border:none;">
+                    <span style="font-size:1.5em;">📷</span> <span>Choisir une image</span>
+                    <input type="file" id="img" name="image" accept="image/*" style="display:none;">
+                </label>
+            </div>
+            <div id="img-preview" style="margin-top:10px;"></div>
+
             <input type="hidden" name="_captcha" value="false">
             <input type="submit" value="Envoyer 🚀">
+            <script>
+            // Optional: Show preview of selected image
+            document.addEventListener('DOMContentLoaded', function() {
+                const imgInput = document.getElementById('img');
+                const preview = document.getElementById('img-preview');
+                if(imgInput) {
+                    imgInput.addEventListener('change', function(e) {
+                        preview.innerHTML = '';
+                        if (imgInput.files && imgInput.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function(ev) {
+                                const img = document.createElement('img');
+                                img.src = ev.target.result;
+                                img.style.maxWidth = '120px';
+                                img.style.maxHeight = '120px';
+                                img.style.borderRadius = '8px';
+                                img.style.marginTop = '5px';
+                                preview.appendChild(img);
+                            };
+                            reader.readAsDataURL(imgInput.files[0]);
+                        }
+                    });
+                }
+            });
+            </script>
         </form>
     </div>
 </body>
